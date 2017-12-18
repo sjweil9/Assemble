@@ -1,0 +1,45 @@
+div.container.edit {
+    background: url('writing.jpeg') no-repeat center;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    padding: 7.5% 5% 5% 5%;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+    div.container.edit div.col-md-6 {
+        color: white;
+        background: rgba(40, 40, 40, 0.95);
+        padding: 2.5em;
+    }
+    div.container.edit h3 {
+        margin: 1em 0 1em 0;
+    }
+    div.container.edit input, div.container.edit textarea {
+        display: block;
+        width: 80%;
+        margin: 1em auto;
+        border-radius: .25em;
+        padding: .25em .75em .25em .75em;
+    }
+    div.container.edit #rem_chars {
+        margin: 1em auto;
+    }
+    div.container.edit div#location {
+        width: 80%;
+        margin: 1em auto;
+        text-align: left;
+    }
+        div.container.edit div#location input {
+            margin: 0;
+            display: inline-block;
+        }
+    div.container.edit button {
+        width: 30%;
+        margin: 1em auto;
+        display: block;
+    }
+    div.container.edit .error {
+        text-align: center;
+    }

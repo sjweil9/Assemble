@@ -1,0 +1,24 @@
+<nav class="navbar fixed-top navbar-inverse bg-inverse">
+    <div class="container">
+        <a class="navbar-brand" href="<%= events_path %>"><%= image_tag "favicon.png" %></a>
+        <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarLinks"
+            aria-controls="navbarLinks" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarLinks">
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="<%= events_path %>">Find Events</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%= edit_user_path(@user.id) %>">Edit Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%= log_out_path %>" data-method="delete">Log Out</a>
+            </li>
+        </ul>
+        <!-- Links -->
+    </div>
+</nav>

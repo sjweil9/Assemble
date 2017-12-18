@@ -1,0 +1,16 @@
+<% content_for :title, "Reset Password" %>
+
+<div class="welcome">
+    <div id="overlay">
+        <h1>Reset your password:</h1>
+        <form action="<%= reset_password_path(@user_to_reset.reset_token) %>" method="post" id="reset">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="email" value="<%= @user_to_reset.email %>">
+            <input type="password" name="password" placeholder="New Password">
+            <%= render "shared/errors", type: "password" %>
+            <input type="password" name="password_confirmation" placeholder="Confirm New Password">
+            <%= render "shared/errors", type: "password_confirmation" %>
+            <button type="submit">Reset My Password</button>
+        </form>
+    </div>
+</div>

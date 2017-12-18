@@ -1,0 +1,9 @@
+Hi <%= @user.first %>,
+
+Thanks for registering for Assemble! To confirm your registration click the URL below.
+
+<%= confirm_email_url(@user.confirm_token) %>
+
+Cheers,
+
+The Assemble Team

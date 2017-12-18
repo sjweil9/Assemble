@@ -1,0 +1,13 @@
+Hi <%= @user.first %>,
+
+Your account for Assemble was locked after five failed login attempts within in an hour.
+
+If you have not made these failed attempts, please send an email to our team at security@assemble.com.
+
+Otherwise, please follow the link below to unlock your account. 
+
+<%= unlock_account_url(@user.unlock_token) %>
+
+Cheers,
+
+The Assemble Team

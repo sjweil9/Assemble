@@ -1,0 +1,76 @@
+<% content_for :title, "Welcome" %>
+
+<% if flash[:login] %>
+<style>
+    #login {
+        display: block;
+    }
+    #register {
+        display: none;
+    }
+</style>
+<% end %>
+
+<div class="welcome">
+    <div id="overlay">
+        <form action="<%= create_user_path %>" id="register" method="post">
+            <h1>Welcome to Assemble!</h1>
+            <h4>Register Below</h4>
+            <% if flash[:success] %>
+                <p class="success"><%= flash[:success] %></p>
+            <% end %>
+            <% if flash[:not_found] %>
+                <p class="error"><%= flash[:not_found] %></p>
+            <% end %>
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="text" name="user[first]" placeholder="First Name">
+            <%= render "shared/errors", type: "first" %>
+            <input type="text" name="user[last]" placeholder="Last Name">
+            <%= render "shared/errors", type: "last" %>
+            <input type="email" name="user[email]" placeholder="Email Address">
+            <%= render "shared/errors", type: "email" %>
+            <div id="location">
+                <input type="text" name="user[location]" placeholder="Location">
+                <select name="user[state]">
+                    <option disabled selected hidden>State</option>
+                <% @states.each do |state| %>
+                    <option value="<%= state %>"><%= state %></option>
+                <% end %>
+                </select>
+            </div>
+            <%= render "shared/errors", type: "location" %>
+            <%= render "shared/errors", type: "state" %>
+            <input type="password" name="user[password]" placeholder="Password">
+            <%= render "shared/errors", type: "password" %>
+            <p><small>*Password must be at least 8 characters and contain at least one uppercase, one lowercase, one number, and one symbol.</small></p>
+            <input type="password" name="user[password_confirmation]" placeholder="Confirm Password">
+            <%= render "shared/errors", type: "password_confirmation" %>
+            <button type="submit">Register</button>
+
+            <p><a href="#" class="flip">Already registered? Click here to sign in</a></p>
+        </form>
+
+        <form action="<%= log_in_path %>" id="login" method="post">
+            <h1>Welcome Back!</h1>
+            <% if flash[:login] %>
+                <% if flash[:success] %>
+                    <p class="success"><%= flash[:success] %></p>
+                <% end %>
+            <% end %>
+            <h4>Log In Below</h4>
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="email" name="email" placeholder="Email Address">
+            <% if flash[:login] %>
+                <%= render "shared/errors", type: "email" %>
+            <% end %>
+            <input type="password" name="password" placeholder="Password">
+            <% if flash[:login] %>
+                <%= render "shared/errors", type: "password" %>
+            <% end %>
+            <p><small><a href="<%= forgot_password_path %>">Forgot your password?</a></small></p>
+            <button type="submit">Login</button>
+
+            <p><a href="#" class="flip">Haven't registered yet? Click here to sign up</a></p>
+        </form>
+    </div>
+</div>

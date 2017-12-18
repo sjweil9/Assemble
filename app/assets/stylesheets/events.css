@@ -1,0 +1,77 @@
+div.container.events {
+    background: url('fistbumps.jpeg') no-repeat center;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    padding: 7.5% 5% 5% 5%;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+div#events_overlay {
+    color: white;
+    background: rgba(40, 40, 40, 0.95);
+    padding: 2.5em;
+}
+    div#events_overlay h3 {
+        margin: 1.5em 0 1.5em 0;
+    }
+    table thead {
+        font-size: 1.5em;
+    }
+    div#events_overlay a {
+        color: white;
+        text-decoration: none;
+    }
+
+
+#newEvent div.card.card-block {
+    background: none;
+    border: none;
+}
+    #newEvent input, #newEvent textarea {
+        display: block;
+        width: 80%;
+        margin: 1em;
+        border-radius: .25em;
+        padding: .25em .75em .25em .75em;
+    }
+    #rem_chars {
+        display: block;
+        width: 80%;
+        margin: 1em;
+        color: green;
+    }
+    textarea {
+        height: 6em;
+    }
+    #newEvent div#location {
+        width: 80%;
+        margin: 1em;
+    }
+        #newEvent div#location input {
+            margin: 0;
+            display: inline-block;
+        }
+    #newEvent button {
+        width: 30%;
+        margin: 1em;
+        display: block;
+    }
+    #newEvent .error {
+        margin-left: 1.25em;
+    }
+div.row.events {
+    margin-top: 1.5em;
+}
+div.col-md-6.pastevents {
+    text-align: right;
+}
+
+.table-striped > thead > tr > th {
+    background-color: grey;
+}
+.table-striped > tbody > tr:nth-child(even) > td {
+    background-color: grey;
+}

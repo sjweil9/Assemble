@@ -1,0 +1,48 @@
+div.container.show {
+    background: url('roadbg.jpeg') no-repeat center;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    padding: 7.5% 5% 5% 5%;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+    div.container.show .row {
+        color: white;
+        background: rgba(40, 40, 40, 0.95);
+        padding: 2.5em;
+    }
+    div.container.show h3 {
+        text-align: center;
+    }
+    div#comments {
+        height: 50vh;
+        width: 100%;
+        overflow-y: scroll;
+        border-left: 1px solid white;
+    }
+    #newCommentToggle {
+        margin-top: 1em;
+    }
+    form#addComment {
+        margin-top: 1.5em;
+    }
+        form#addComment textarea {
+            width: 100%;
+            height: 4em;
+            padding: .5em;
+        }
+        form#addComment #rem_chars {
+            margin: 0 0 1em 0;
+        }
+    p.comment {
+        margin: 0 0 .5em .5em;
+    }
+        p.comment small {
+            display: block;
+        }
+        p.comment small a.btn.btn-danger {
+            font-size: .1em;
+            padding: .25em;
+        }

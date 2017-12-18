@@ -1,0 +1,91 @@
+<% content_for :title, @event.name %>
+
+<% if flash[:content] %>
+<script>
+    $(document).ready(function(){
+        $('#newCommentToggle').click();
+    });
+</script>
+<% end %>
+
+<div class="container show">
+    <div class="row">
+        <div class="col-md-7">
+            <h1><%= @event.name %></h1>
+            <p><b>Host:</b> <%= @event.user.first %> <%= @event.user.last %></p>
+            <p><b>Date:</b> <%= @event.date.strftime("%a %b #{@event.date.day.ordinalize}, %Y") %></p>
+            <p><b>Time:</b> <%= @event.time.strftime("%l:%M %p") %></p>
+            <p><b>Location:</b> <%= @event.location %>, <%= @event.state %></p>
+            <p>
+                <b>What's going on:</b> 
+                <% if @event.description != nil %>
+                    <i><%= @event.description %></i>
+                <% else %>
+                    <i>The host hasn't provided a description for this event yet.</i>
+                <% end %>
+            </p>
+            <p><%= @event.attendees.count %> <% if @event.attendees.count == 1 %> person is <% else %> people are <% end %> signed up so far!</p>
+            <% if @event.attendees.count > 0 %>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Attendee</th>
+                            <th>Location</th>
+                            <th>Signed Up</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @event.attendees.each do |p| %>
+                        <tr>
+                            <td><%= p.first %> <%= p.last %></td>
+                            <td><%= p.location %>, <%= p.state %></td>
+                            <td><%= time_ago_in_words(p.attendee.find_by(event_id: @event.id).created_at.getlocal("-06:00")) %> ago</td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+            <% end %>
+            <% if @event.user_id == @user.id %>
+                <a class="btn btn-warning" href="<%= edit_event_path(@event.id) %>">Edit Event</a>
+                <%= link_to 'Delete Event', delete_event_path(@event.id), data: { confirm: "Are you sure?", method: "delete" }, class: "btn btn-danger" %>
+            <% else %>
+                <% if @event.attendees.include? @user %>
+                    <a class="btn btn-warning" data-method="delete" href="<%= leave_event_path(@event.id) %>">Leave Event</a>
+                <% else %>
+                    <a class="btn btn-success" data-method="post" href="<%= join_event_path(@event.id) %>">Sign Me Up!</a>
+                <% end %>
+            <% end %>
+        </div>
+        <div class="col-md-5">
+            <h3>Discussion</h3>
+            <div id="comments">
+                <% @comments.each do |c| %>
+                <p class="comment">
+                    <b><%= c.user.first %>:</b> <%= c.content %>
+                    <small>
+                        <%= time_ago_in_words(c.created_at) %> ago
+                        <% if c.user_id == @user.id %>
+                        <%= link_to 'X', delete_comment_path(c.id), data: { confirm: "Are you sure you want to delete that?", method: "delete" }, class: "btn btn-danger btn-sm" %>
+                        <% end %>
+                    </small>
+                </p>
+                <% end %>
+            </div>
+            <a class="btn btn-primary" id="newCommentToggle" data-toggle="collapse" href="#newComment" aria-expanded="false" aria-controls="newComment">
+                Join the Discussion
+            </a>
+            <div class="collapse" id="newComment">
+                <form action="<%= create_comment_path(@event.id) %>" method="post" id="addComment">
+                    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                    <textarea name="content" class="comment" placeholder="Your comment here..."></textarea>
+                    <span id="rem_chars">0/140 characters</span>
+                    <%= render "shared/errors", type: "content" %>
+                    <button type="submit" class="btn btn-success">Post Comment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="assets/commentlimit.js"></script>

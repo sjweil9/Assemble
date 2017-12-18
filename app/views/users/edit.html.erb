@@ -1,0 +1,40 @@
+<% content_for :title, "Edit Profile" %>
+
+<div class="container edit">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1>Hey <%= @user.first %>, feel like making some changes?</h1>
+            <form action="<%= update_user_path(@user.id) %>" id="register" method="post">
+                
+                <h3>Update Information Below:</h3>
+                <% if flash[:success] %>
+                <p class="success"><%= flash[:success] %></p>
+                <% end %>
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input type="hidden" name="_method" value="put">
+                <input type="text" name="user[first]" placeholder="First Name" value="<%= @user.first %>">
+                <%= render "shared/errors", type: "first" %>
+                <input type="text" name="user[last]" placeholder="Last Name" value="<%= @user.last %>">
+                <%= render "shared/errors", type: "last" %>
+                <div id="location">
+                    <input type="text" name="user[location]" placeholder="Location" value="<%= @user.location %>">
+                    <select name="user[state]">
+                        <% @states.each do |state| %>
+                            <% if state == @user.state %>
+                            <option value="<%= state %>" selected><%= state %></option>
+                            <% else %>
+                            <option value="<%= state %>"><%= state %></option>
+                            <% end %>
+                        <% end %>
+                    </select>
+                </div>
+                <%= render "shared/errors", type: "location" %>
+                <%= render "shared/errors", type: "state" %>
+    
+                <button type="submit">Update</button>
+    
+            </form>
+
+        </div>
+    </div>
+</div>
