@@ -22,6 +22,7 @@ class UsersController < ApplicationController
     end
 
     def edit
+        return redirect_to events_path unless session[:user_id].to_s == params[:id]
         @user = current_user
         @states = get_states
     end

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('textarea.desc').keydown(function() {
+    $('textarea.desc').keyup(function() {
         if (this.value.length > 500) {
             $('#rem_chars').css("color", "red");
         }

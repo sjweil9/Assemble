@@ -4,7 +4,9 @@ class EventsController < ApplicationController
         @user = current_user
         @states = get_states
         @local_events = Event.includes(:user).where("events.state = '#{@user.state}' AND (events.date - current_date) > -1").order("date ASC, time ASC").references(:user)
+        @local_events = @local_events.reject{ |e| e.date == Date.current and Time.parse(e.time.strftime("%H:%M")) - Time.parse((Time.now - e.time_offset.hours).strftime("%H:%M")) <= 0 }
         @other_events = Event.includes(:user).where("events.state != '#{@user.state}' AND (events.date - current_date) > -1").order("date ASC, time ASC").references(:user)
+        @other_events = @other_events.reject{ |e| e.date == Date.current and Time.parse(e.time.strftime("%H:%M")) - Time.parse((Time.now - e.time_offset.hours).strftime("%H:%M")) <= 0 }
     end
 
     def create
@@ -21,7 +23,8 @@ class EventsController < ApplicationController
 
     def past
         @user = current_user
-        @events = Event.includes(:user).where("events.date < current_date").references(:user)
+        @events = Event.includes(:user).where("events.date <= current_date").references(:user)
+        @events = @events.reject{ |e| e.date == Date.current and Time.parse(e.time.strftime("%H:%M")) - Time.parse((Time.now - e.time_offset.hours).strftime("%H:%M")) > 0 }
     end
 
     def show

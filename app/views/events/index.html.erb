@@ -40,9 +40,9 @@
                                 <%= link_to 'Delete Event', delete_event_path(event.id), data: { confirm: "Are you sure?", method: "delete" }, class: "btn btn-danger" %>
                             <% else %>
                                 <% if event.attendees.include? @user %>
-                                    <a class="btn btn-warning" data-method="delete" href="<%= leave_event_path(event.id) %>">Leave</a>
+                                    <a class="btn btn-warning" data-method="delete" href="<%= leave_event_path(event.id) %>">Leave Event</a>
                                 <% else %>
-                                    <a class="btn btn-success" data-method="post" href="<%= join_event_path(event.id) %>">Join</a>
+                                    <a class="btn btn-success" data-method="post" href="<%= join_event_path(event.id) %>">Join Event</a>
                                 <% end %>
                             <% end %>
                         </td>
@@ -83,9 +83,9 @@
                                 <%= link_to 'Delete Event', delete_event_path(event.id), data: { confirm: "Are you sure?", method: "delete" }, class: "btn btn-danger" %>
                             <% else %>
                                 <% if event.attendees.include? @user %>
-                                    <a class="btn btn-warning" data-method="delete" href="<%= leave_event_path(event.id) %>">Leave</a>
+                                    <a class="btn btn-warning" data-method="delete" href="<%= leave_event_path(event.id) %>">Leave Event</a>
                                 <% else %>
-                                    <a class="btn btn-success" data-method="post" href="<%= join_event_path(event.id) %>">Join</a>
+                                    <a class="btn btn-success" data-method="post" href="<%= join_event_path(event.id) %>">Join Event</a>
                                 <% end %>
                             <% end %>
                         </td>

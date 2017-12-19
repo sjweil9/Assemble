@@ -16,12 +16,13 @@ class Event < ActiveRecord::Base
     has_many :attendees, through: :attendee, source: :user
     has_many :comments, dependent: :destroy
 
+    before_validation :add_offset
     before_save :set_cases
 
     private
     def future_dated
         errors.add(:date, "You may not add events that have already occured.") if date.present? && date < Date.current
-        errors.add(:time, "You may not add events that have already occured.") if date.present? && time.present? && date == Date.current && time < Time.now
+        errors.add(:time, "You may not add events that have already occured.") if date.present? && time.present? && date == Date.current && time.strftime("%H:%M") < (Time.now - self.time_offset.hours).strftime("%H:%M")
     end
 
     def check_state
@@ -35,6 +36,31 @@ class Event < ActiveRecord::Base
         self.state.upcase!
         self.location = self.location.titleize
         self.name = self.name.titleize
+    end
+
+    def add_offset
+        response = RestClient::Request.execute(
+            method: :get,
+            url: "https://maps.googleapis.com/maps/api/geocode/json?address=#{self.location},+#{self.state}&key=AIzaSyDX8UzBD-9KLioIlhAD9Y2nlVFsQQjsB60"
+        )
+        parsed = JSON.parse(response)
+        if parsed["status"] == "ZERO_RESULTS"
+            response = RestClient::Request.execute(
+                method: :get,
+                url: "https://maps.googleapis.com/maps/api/geocode/json?address=#{self.state}&key=AIzaSyDX8UzBD-9KLioIlhAD9Y2nlVFsQQjsB60"
+            )
+            parsed = JSON.parse(response)
+        end
+        unless parsed["status"] == "ZERO_RESULTS"
+            lat = parsed["results"][0]['geometry']['location']['lat']
+            lng = parsed["results"][0]['geometry']['location']['lng']
+            response = RestClient::Request.execute(
+                method: :get,
+                url: "https://maps.googleapis.com/maps/api/timezone/json?location=#{lat},#{lng}&timestamp=#{Time.now.to_i}&key=AIzaSyBkpWx-19x7tUi9X2eD6LpKbEfvDExf4Vs"
+            )
+            parsed = JSON.parse(response)
+            self.time_offset = (parsed["rawOffset"] / 3600) * -1
+        end
     end
 
 end

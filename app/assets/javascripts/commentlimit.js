@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('textarea.comment').keydown(function() {
+    $('textarea.comment').keyup(function() {
         if (this.value.length > 140) {
             $('#rem_chars').css("color", "red");
         }
